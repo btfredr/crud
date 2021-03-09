@@ -12,7 +12,19 @@ const Login = () => {
     });
     return (
         <>
-            <p>Login</p>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                {loginError && <p>{loginError}</p>}
+                <fieldset disabled={submitting}>
+                    <div>
+                        <input name='identifier' placeholder='Username' ref={register} type='text' />
+                        {errors.identifier && <p>{errors.identifier.message}</p>}
+                    </div>
+                    <div>
+                        <input name='identifier' placeholder='Username' ref={register} type='password' />
+                        {errors.password && <p>{errors.identifier.password}</p>}
+                    </div>
+                </fieldset>
+            </form>
         </>
     )
 }
