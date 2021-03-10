@@ -1,31 +1,39 @@
-import { useContext } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import AuthContext from '../context/AuthContext';
+import { useContext } from "react";
+import { Link, useHistory } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
 
 const Nav = () => {
-    const [auth, setAuth] = useContext(AuthContext);
+  const [auth, setAuth] = useContext(AuthContext);
 
-    const history = useHistory();
+  const history = useHistory();
 
-    const logout = () => {
-        setAuth(null);
-        history.push('/');
-    };
+  const logout = () => {
+    setAuth(null);
+    history.push("/");
+  };
 
-
-    return (
-        <nav>
-            <Link to='/'>Home</Link>
-            {auth ? (
-                <>
-                    <Link to='/products'>Products</Link> | {' '}
-                    <button onClick={logout}>Log out</button>
-                </>
-            ) : (
-                <Link to='/login'>Login</Link>
-            )}
-        </nav>
-    );
+  return (
+    <nav className="nav">
+      <Link to="/" className="nav-item">
+        Home
+      </Link>
+      {auth ? (
+        <>
+          <Link to="/products" className="nav-item">
+            Products
+          </Link>{" "}
+          |{" "}
+          <button onClick={logout} className="nav-btn">
+            Log out
+          </button>
+        </>
+      ) : (
+        <Link to="/login" className="nav-item">
+          Login
+        </Link>
+      )}
+    </nav>
+  );
 };
 
-export default Nav
+export default Nav;

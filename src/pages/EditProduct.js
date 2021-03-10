@@ -69,7 +69,7 @@ const EditProduct = () => {
               ref={register}
               defaultValue={product.title}
             />
-            {errors.title && <p>{errors.identifier.message}</p>}
+            {errors.title && <p>{errors.title.message}</p>}
           </div>
 
           <div>
