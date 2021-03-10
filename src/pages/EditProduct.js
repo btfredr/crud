@@ -59,11 +59,12 @@ const EditProduct = () => {
     <div className="container">
       <h2>Edit</h2>
       <Item {...product} />
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className="edit-form" onSubmit={handleSubmit(onSubmit)}>
         {updateError && <p>{updateError}</p>}
         <fieldset disabled={submitting}>
           <div>
             <input
+              className="input"
               name="title"
               placeholder="Title"
               ref={register}
@@ -74,6 +75,7 @@ const EditProduct = () => {
 
           <div>
             <input
+              className="input"
               name="price"
               placeholder="Price"
               defaultValue={product.price}
@@ -84,6 +86,7 @@ const EditProduct = () => {
           </div>
           <div>
             <textarea
+              className="input"
               name="description"
               placeholder="Description"
               defaultValue={product.description}
@@ -94,6 +97,7 @@ const EditProduct = () => {
           </div>
           <div>
             <input
+              className="input"
               name="image_url"
               placeholder="Image URL"
               ref={register}

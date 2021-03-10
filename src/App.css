@@ -25,8 +25,10 @@ a {
 
 .nav-btn {
   border: none;
-  padding: 0.3rem;
+  padding: 5px;
   cursor: pointer;
+  margin-left: 1rem;
+  border-radius: 4px;
 }
 
 .product {
@@ -36,4 +38,16 @@ a {
   padding: 1rem;
   margin: 1rem;
   box-shadow: 10px 10px 25px 0px rgba(0, 0, 0, 0.21);
+}
+
+.edit-form {
+  border: none;
+  width: 100%;
+  max-width: 500px;
+  margin: 1rem;
+}
+
+.input {
+  width: 100%;
+  max-width: 100%;
 }
