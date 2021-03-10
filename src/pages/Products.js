@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 import useAxios from '../utils/useAxios';
 import { PRODUCTS_PATH } from '../utils/constants';
+import Item from '../components/Item';
 
 export const Products = () => {
     const [auth] = useContext(AuthContext);
@@ -27,10 +28,22 @@ export const Products = () => {
         history.push('/login');
     }
 
+    if (!products) {
+        return <h3>Loading...</h3>
+    }
+
 
     return (
         <>
             <h1>Products</h1>
+
+            {products.map(product => {
+                return (
+                    <Link key={product.id} to={`/edit/${product.id}`}>
+                        <Item {...product} />
+                    </Link>
+                )
+            })}
         </>
     );
 };
