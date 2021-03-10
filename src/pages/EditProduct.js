@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { productSchema } from "../utils/schemas";
 
+import "../App.css";
+
 const EditProduct = () => {
   const [product, setProduct] = useState(null);
   const { id } = useParams();
@@ -54,7 +56,7 @@ const EditProduct = () => {
   }
 
   return (
-    <>
+    <div className="container">
       <h2>Edit</h2>
       <Item {...product} />
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -107,7 +109,7 @@ const EditProduct = () => {
         </fieldset>
       </form>
       {success ? <p>Listing of {product.title} was updated</p> : null}
-    </>
+    </div>
   );
 };
 
