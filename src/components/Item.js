@@ -1,27 +1,13 @@
-
-import React from 'react'
-
-const Item = ({ item }) => {
+const Item = props => {
+    const { title, description, image_url, price } = props;
     return (
-        <div className='card'>
-            <div className='card-inner'>
-                <div className='card-front'>
-                    <img src={item.imageurl} alt='' />
-                </div>
-                <div className='card-back'>
-                    <h1>{item.name}</h1>
-                    <ul>
-                        <li>
-                            <strong>Actor Name:</strong> {item.title}
-                        </li>
-                        <li>
-                            <strong>Nickname:</strong> {item.price}
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    )
-}
-
-export default Item
+      <div style={{ width: '100%', maxWidth: '500px' }}>
+        <h2>{title}</h2>
+        <img src={image_url} alt={title} style={{ width: '100%' }} />
+        <h3>{price}</h3>
+        <p>{description}</p>
+      </div>
+    );
+  };
+  
+  export default Item;

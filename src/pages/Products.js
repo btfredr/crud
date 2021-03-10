@@ -4,6 +4,7 @@ import AuthContext from '../context/AuthContext';
 import useAxios from '../utils/useAxios';
 import { PRODUCTS_PATH } from '../utils/constants';
 import Item from '../components/Item';
+import {Link} from 'react-router-dom';
 
 export const Products = () => {
     const [auth] = useContext(AuthContext);
