@@ -30,9 +30,12 @@ Products Path: `/products`
 Auth Details:
 
 ```
+username: admin
 email: admin@admin.com
 password: Pass1234
 ```
+
+(in the documentation for strapi you can use either username or email as identifier.)
 
 ### Packages to Install:
 
@@ -138,15 +141,15 @@ Before we try fetching anything here - let's get our Routing set up.
 In App.js:
 
 ```jsx
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import HomePage from './pages/HomePage';
+import HomePage from "./pages/HomePage";
 
 const App = () => {
   return (
     <Router>
       <Switch>
-        <Route path='/' exact component={HomePage} />
+        <Route path="/" exact component={HomePage} />
       </Switch>
     </Router>
   );
@@ -162,14 +165,14 @@ Let's try to perform a get request to our API.
 In homepage.js:
 
 ```jsx
-import { useEffect } from 'react';
-import { BASE_URL, PRODUCTS_PATH } from '../utils/constants';
-import axios from 'axios';
+import { useEffect } from "react";
+import { BASE_URL, PRODUCTS_PATH } from "../utils/constants";
+import axios from "axios";
 const HomePage = () => {
   useEffect(() => {
     axios
       .get(`${BASE_URL}${PRODUCTS_PATH}`)
-      .then(response => console.log(response));
+      .then((response) => console.log(response));
   }, []);
   return (
     <>
@@ -200,11 +203,11 @@ This is the point where you need full focus.
 Create your page component as you otherwise would and then import yup and create a schema.
 
 ```jsx
-import * as yup from 'yup';
+import * as yup from "yup";
 
 const loginSchema = yup.object().shape({
-  identifier: yup.string().required('Please enter your username'),
-  password: yup.string().required('Please enter your password')
+  identifier: yup.string().required("Please enter your username"),
+  password: yup.string().required("Please enter your password"),
 });
 ```
 
@@ -215,15 +218,15 @@ For other API's / Backends this might differ.
 Next we need to import the `useForm()` hook and the `yupResolver()`
 
 ```jsx
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 ```
 
 Now let's initialize our useForm hook.
 
 ```jsx
 const { register, handleSubmit, errors } = useForm({
-  resolver: yupResolver(loginSchema)
+  resolver: yupResolver(loginSchema),
 });
 ```
 
@@ -245,20 +248,20 @@ Inside your return statement, please create a form like this:
   {loginError && <p>{loginError}</p>}
   <fieldset disabled={submitting}>
     <div>
-      <input name='identifier' placeholder='Username' ref={register} />
+      <input name="identifier" placeholder="Username" ref={register} />
       {errors.identifier && <p>{errors.identifier.message}</p>}
     </div>
 
     <div>
       <input
-        name='password'
-        placeholder='Password'
+        name="password"
+        placeholder="Password"
         ref={register}
-        type='password'
+        type="password"
       />
       {errors.password && <p>{errors.password.message}</p>}
     </div>
-    <button type='submit'>{submitting ? 'Loggin in...' : 'Login'}</button>
+    <button type="submit">{submitting ? "Loggin in..." : "Login"}</button>
   </fieldset>
 </form>
 ```
@@ -275,7 +278,7 @@ Each field is configured the same, but they write to different values. Let's tak
 
 ```jsx
 <div>
-  <input name='identifier' placeholder='Username' ref={register} />
+  <input name="identifier" placeholder="Username" ref={register} />
   {errors.identifier && <p>{errors.identifier.message}</p>}
 </div>
 ```
@@ -287,7 +290,7 @@ So later we can access and read the `identifier` field by calling data.identifie
 Now let's add the onSubmit function...
 
 ```jsx
-const onSubmit = async data => {
+const onSubmit = async (data) => {
   setSubmitting(true);
   setLoginError(null);
 
@@ -295,9 +298,9 @@ const onSubmit = async data => {
 
   try {
     const response = await axios.post(`${BASE_URL}${AUTH_PATH}`, data);
-    console.log('response', response.data);
+    console.log("response", response.data);
   } catch (error) {
-    console.log('error', error);
+    console.log("error", error);
     setLoginError(error.toString());
   } finally {
     setSubmitting(false);
@@ -312,8 +315,8 @@ then we get a response object back, and by console.log'ing this we can see we ge
 As you can see in the axios.post() request we are referring to BASE_URL and AUTH_PATH, we created these constants earlier so make sure to import them at the top of your document:
 
 ```jsx
-import axios from 'axios';
-import { BASE_URL, AUTH_PATH } from '../utils/constants';
+import axios from "axios";
+import { BASE_URL, AUTH_PATH } from "../utils/constants";
 ```
 
 ### Login halftime
@@ -321,16 +324,16 @@ import { BASE_URL, AUTH_PATH } from '../utils/constants';
 At this point your Login.js should look something like this:
 
 ```jsx
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { BASE_URL, AUTH_PATH } from '../utils/constants';
-import axios from 'axios';
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { BASE_URL, AUTH_PATH } from "../utils/constants";
+import axios from "axios";
 
 const loginSchema = yup.object().shape({
-  identifier: yup.string().required('Please enter your username'),
-  password: yup.string().required('Please enter your password')
+  identifier: yup.string().required("Please enter your username"),
+  password: yup.string().required("Please enter your password"),
 });
 
 const Login = () => {
@@ -338,10 +341,10 @@ const Login = () => {
   const [loginError, setLoginError] = useState(null);
 
   const { register, handleSubmit, errors } = useForm({
-    resolver: yupResolver(loginSchema)
+    resolver: yupResolver(loginSchema),
   });
 
-  const onSubmit = async data => {
+  const onSubmit = async (data) => {
     setSubmitting(true);
     setLoginError(null);
 
@@ -349,9 +352,9 @@ const Login = () => {
 
     try {
       const response = await axios.post(`${BASE_URL}${AUTH_PATH}`, data);
-      console.log('response', response.data);
+      console.log("response", response.data);
     } catch (error) {
-      console.log('error', error);
+      console.log("error", error);
       setLoginError(error.toString());
     } finally {
       setSubmitting(false);
@@ -364,20 +367,20 @@ const Login = () => {
         {loginError && <p>{loginError}</p>}
         <fieldset disabled={submitting}>
           <div>
-            <input name='identifier' placeholder='Username' ref={register} />
+            <input name="identifier" placeholder="Username" ref={register} />
             {errors.identifier && <p>{errors.identifier.message}</p>}
           </div>
 
           <div>
             <input
-              name='password'
-              placeholder='Password'
+              name="password"
+              placeholder="Password"
               ref={register}
-              type='password'
+              type="password"
             />
             {errors.password && <p>{errors.password.message}</p>}
           </div>
-          <button type='submit'>{submitting ? 'Loggin in...' : 'Login'}</button>
+          <button type="submit">{submitting ? "Loggin in..." : "Login"}</button>
         </fieldset>
       </form>
     </>
@@ -408,7 +411,7 @@ All custom hooks should start with the `use` prefix.
 Start the hook off by typing this:
 
 ```jsx
-import { useState } from 'react';
+import { useState } from "react";
 
 const useLocalStorage = (key, initialValue) => {};
 ```
@@ -422,7 +425,7 @@ The other is the initialValue of the key.
 So if we wanted to store a simple boolean called 'alive' we would call our hook like so:
 
 ```jsx
-useLocalStorage('alive', true);
+useLocalStorage("alive", true);
 ```
 
 However we want to store the entire response object from our login request, and we want to return a getter and a setter, just like useState does.
@@ -447,7 +450,7 @@ const [storedValue, setStoredValue] = useState(() => {
 
 // Return a wrapped version of useState's setter function that ...
 // ... persists the new value to localStorage.
-const setValue = value => {
+const setValue = (value) => {
   try {
     // Allow value to be a function so we have same API as useState
     const valueToStore = value instanceof Function ? value(storedValue) : value;
@@ -473,7 +476,7 @@ return [storedValue, setValue];
 Your finished hook should look something like this:
 
 ```jsx
-import { useState } from 'react';
+import { useState } from "react";
 
 const useLocalStorage = (key, initialValue) => {
   // State to store our value
@@ -493,7 +496,7 @@ const useLocalStorage = (key, initialValue) => {
 
   // Return a wrapped version of useState's setter function that ...
   // ... persists the new value to localStorage.
-  const setValue = value => {
+  const setValue = (value) => {
     try {
       // Allow value to be a function so we have same API as useState
       const valueToStore =
@@ -527,13 +530,13 @@ In the `src` folder, please create a new folder called `context` and a file unde
 I will start off by showing you the finished AuthContext, then explain what is happening:
 
 ```jsx
-import { createContext } from 'react';
-import useLocalStorage from '../utils/useLocalStorage';
+import { createContext } from "react";
+import useLocalStorage from "../utils/useLocalStorage";
 
 const AuthContext = createContext([null, () => {}]);
 
-export const AuthProvider = props => {
-  const [auth, setAuth] = useLocalStorage('auth', null);
+export const AuthProvider = (props) => {
+  const [auth, setAuth] = useLocalStorage("auth", null);
   return (
     <AuthContext.Provider value={[auth, setAuth]}>
       {props.children}
@@ -551,8 +554,8 @@ One is called `createContext` and is provided by react.
 The other is called `useLocalStorage` and is our own custom Hook.
 
 ```jsx
-import { createContext } from 'react';
-import useLocalStorage from '../utils/useLocalStorage';
+import { createContext } from "react";
+import useLocalStorage from "../utils/useLocalStorage";
 ```
 
 Let's initialize our AuthContext like so:
@@ -566,8 +569,8 @@ Now we can extend our AuthContext by creating something called a Provider.
 This Provider will allow us to access the state of our useLocalStorage globally as long as we wrap our entire component in it, effectively making our entire page a `'child'` of the Provider.
 
 ```jsx
-export const AuthProvider = props => {
-  const [auth, setAuth] = useLocalStorage('auth', null);
+export const AuthProvider = (props) => {
+  const [auth, setAuth] = useLocalStorage("auth", null);
   return (
     <AuthContext.Provider value={[auth, setAuth]}>
       {props.children}
@@ -583,23 +586,23 @@ Now that we have created our AuthProvider we can make it available to our entire
 Let's start by importing it in our App.js
 
 ```jsx
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider } from "./context/AuthContext";
 ```
 
 Now wrap the entire app in these tags.
 
 ```jsx
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
-import HomePage from './pages/HomePage';
-import Login from './pages/Login';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import HomePage from "./pages/HomePage";
+import Login from "./pages/Login";
 const App = () => {
   return (
     <AuthProvider>
       <Router>
         <Switch>
-          <Route path='/' exact component={HomePage} />
-          <Route path='/login' component={Login} />
+          <Route path="/" exact component={HomePage} />
+          <Route path="/login" component={Login} />
         </Switch>
       </Router>
     </AuthProvider>
@@ -616,13 +619,13 @@ Perfect, now we can go to our Login.js and start writing to localStorage.
 Start by importing the `AuthContext` in Login.js.
 
 ```jsx
-import AuthContext from '../context/AuthContext';
+import AuthContext from "../context/AuthContext";
 ```
 
 Now we need to import the `useContext` Hook from react.
 
 ```jsx
-import { useState, useContext } from 'react';
+import { useState, useContext } from "react";
 ```
 
 Now we need to initialize it.
@@ -646,7 +649,7 @@ So in the try{} block we use setAuth accordingly:
 ```jsx
 try {
   const response = await axios.post(`${BASE_URL}${AUTH_PATH}`, data);
-  console.log('response', response.data);
+  console.log("response", response.data);
   setAuth(response.data);
 }
 ```
@@ -680,9 +683,9 @@ Make a new folder called `components` and inside that folder make a file called 
 In Nav.js:
 
 ```jsx
-import { useContext } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import AuthContext from '../context/AuthContext';
+import { useContext } from "react";
+import { Link, useHistory } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
 
 function Nav() {
   const [auth, setAuth] = useContext(AuthContext);
@@ -691,19 +694,19 @@ function Nav() {
 
   function logout() {
     setAuth(null);
-    history.push('/');
+    history.push("/");
   }
 
   return (
     <nav>
-      <Link to='/'>Home</Link>
+      <Link to="/">Home</Link>
       {auth ? (
         <>
-          | <Link to='/products'>Products</Link> |{' '}
+          | <Link to="/products">Products</Link> |{" "}
           <button onClick={logout}>Log out</button>
         </>
       ) : (
-        <Link to='/login'>Login</Link>
+        <Link to="/login">Login</Link>
       )}
     </nav>
   );
@@ -721,27 +724,27 @@ Create a new page under `./pages` called Products.js
 Return whatever you want in this file. After that, import it in App.js and create a route for it:
 
 ```jsx
-<Route path='/products' component={Products} />
+<Route path="/products" component={Products} />
 ```
 
 While in App.js we can import our Nav.js as well and display it. (Place it outside the switch statement but inside Router).
 
 ```jsx
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
-import Nav from './components/Nav';
-import HomePage from './pages/HomePage';
-import Login from './pages/Login';
-import Products from './pages/Products';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import Nav from "./components/Nav";
+import HomePage from "./pages/HomePage";
+import Login from "./pages/Login";
+import Products from "./pages/Products";
 const App = () => {
   return (
     <AuthProvider>
       <Router>
         <Nav />
         <Switch>
-          <Route path='/' exact component={HomePage} />
-          <Route path='/login' component={Login} />
-          <Route path='/products' component={Products} />
+          <Route path="/" exact component={HomePage} />
+          <Route path="/login" component={Login} />
+          <Route path="/products" component={Products} />
         </Switch>
       </Router>
     </AuthProvider>
@@ -762,9 +765,9 @@ So what we need to do is to make a check on this page to see if we are authentic
 In Products.js, lets import useHistory from react-router-dom and our context, as well as the useContext hook.
 
 ```jsx
-import { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
-import AuthContext from '../context/AuthContext';
+import { useContext } from "react";
+import { useHistory } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
 ```
 
 Now let's initialize our context and history.
@@ -778,23 +781,23 @@ The last thing we need to do here is push our users back to /login if they are n
 
 ```jsx
 if (!auth) {
-  history.push('/login');
+  history.push("/login");
 }
 ```
 
 Your Products.js should now look something like this:
 
 ```jsx
-import { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
-import AuthContext from '../context/AuthContext';
+import { useContext } from "react";
+import { useHistory } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
 
 const Products = () => {
   const [auth] = useContext(AuthContext);
   const history = useHistory();
 
   if (!auth) {
-    history.push('/login');
+    history.push("/login");
   }
   return (
     <>
@@ -814,7 +817,7 @@ Now that we have access to the JWT we could start making get requests to our API
 
 ```jsx
 const options = {
-  headers: { Authorization: `Bearer ${auth.jwt}` }
+  headers: { Authorization: `Bearer ${auth.jwt}` },
 };
 
 axios.get(`${BASE_URL}${PRODUCTS_PATH}`, options);
@@ -827,10 +830,10 @@ In your `utils` folder, create a new file called `useAxios.js`
 At the top of this file, we'll import the following:
 
 ```jsx
-import { useContext } from 'react';
-import axios from 'axios';
-import AuthContext from '../context/AuthContext';
-import { BASE_URL } from '../utils/constants';
+import { useContext } from "react";
+import axios from "axios";
+import AuthContext from "../context/AuthContext";
+import { BASE_URL } from "../utils/constants";
 ```
 
 Now let's define our hook.
@@ -853,7 +856,7 @@ We want our apiClient to target our BASE_URL. We'll define it as follows:
 
 ```jsx
 const apiClient = axios.create({
-  baseURL: BASE_URL
+  baseURL: BASE_URL,
 });
 ```
 
@@ -862,9 +865,9 @@ Your first instinct might be to now return apiClient from useAxios.
 However we have one more step to do, we want to append the options as discussed earlier in the document.
 
 ```jsx
-apiClient.interceptors.request.use(config => {
+apiClient.interceptors.request.use((config) => {
   const token = auth.jwt;
-  config.headers.Authorization = token ? `Bearer ${token}` : '';
+  config.headers.Authorization = token ? `Bearer ${token}` : "";
   return config;
 });
 ```
@@ -878,19 +881,19 @@ Now to finish our hook off we return the apiClient.
 Your hook should now look something like this:
 
 ```jsx
-import { useContext } from 'react';
-import axios from 'axios';
-import AuthContext from '../context/AuthContext';
-import { BASE_URL } from '../utils/constants';
+import { useContext } from "react";
+import axios from "axios";
+import AuthContext from "../context/AuthContext";
+import { BASE_URL } from "../utils/constants";
 
 const useAxios = () => {
   const [auth] = useContext(AuthContext);
   const apiClient = axios.create({
-    baseURL: BASE_URL
+    baseURL: BASE_URL,
   });
-  apiClient.interceptors.request.use(config => {
+  apiClient.interceptors.request.use((config) => {
     const token = auth.jwt;
-    config.headers.Authorization = token ? `Bearer ${token}` : '';
+    config.headers.Authorization = token ? `Bearer ${token}` : "";
     return config;
   });
 
@@ -906,7 +909,7 @@ Now instead of writing:
 
 ```jsx
 const options = {
-  headers: { Authorization: `Bearer ${auth.jwt}` }
+  headers: { Authorization: `Bearer ${auth.jwt}` },
 };
 
 axios.get(`${BASE_URL}${PRODUCTS_PATH}`, options);
@@ -962,12 +965,12 @@ Let's display this data on our products page
 Under the `components` folder please create a new component called `Item.js` in this file add the following:
 
 ```jsx
-const Item = props => {
+const Item = (props) => {
   const { title, description, image_url, price } = props;
   return (
-    <div style={{ width: '100%', maxWidth: '500px' }}>
+    <div style={{ width: "100%", maxWidth: "500px" }}>
       <h2>{title}</h2>
-      <img src={image_url} alt={title} style={{ width: '100%' }} />
+      <img src={image_url} alt={title} style={{ width: "100%" }} />
       <h3>{price}</h3>
       <p>{description}</p>
     </div>
@@ -998,7 +1001,7 @@ So let's start with the familiar and easy stuff.
 In Products.js add `Link` to the import list for react-router-dom
 
 ```jsx
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory, Link } from "react-router-dom";
 ```
 
 While loading our products we want to return "loading". So I'll add an early return based on an if statement:
@@ -1013,7 +1016,7 @@ Now let's wrap our returned Item components in a Link that takes us to a new pag
 
 ```jsx
 {
-  products.map(product => {
+  products.map((product) => {
     return (
       <Link key={product.id} to={`/edit/${product.id}`}>
         <Item {...product} />
@@ -1026,12 +1029,12 @@ Now let's wrap our returned Item components in a Link that takes us to a new pag
 Your Products.js should now look something like this:
 
 ```jsx
-import { useContext, useState, useEffect } from 'react';
-import { useHistory, Link } from 'react-router-dom';
-import AuthContext from '../context/AuthContext';
-import useAxios from '../utils/useAxios';
-import { PRODUCTS_PATH } from '../utils/constants';
-import Item from '../components/Item';
+import { useContext, useState, useEffect } from "react";
+import { useHistory, Link } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
+import useAxios from "../utils/useAxios";
+import { PRODUCTS_PATH } from "../utils/constants";
+import Item from "../components/Item";
 
 const Products = () => {
   const [auth] = useContext(AuthContext);
@@ -1053,7 +1056,7 @@ const Products = () => {
   }, []);
 
   if (!auth) {
-    history.push('/login');
+    history.push("/login");
   }
 
   if (!products) {
@@ -1063,7 +1066,7 @@ const Products = () => {
   return (
     <>
       <h1>Products</h1>
-      {products.map(product => {
+      {products.map((product) => {
         return (
           <Link key={product.id} to={`/edit/${product.id}`}>
             <Item {...product} />
@@ -1082,10 +1085,10 @@ In your `pages` folder, create a new page called EditProduct.js.
 I will set up mine like this for now:
 
 ```jsx
-import { useParams } from 'react-router-dom';
-import useAxios from '../utils/useAxios';
-import { useState, useEffect } from 'react';
-import Item from '../components/Item';
+import { useParams } from "react-router-dom";
+import useAxios from "../utils/useAxios";
+import { useState, useEffect } from "react";
+import Item from "../components/Item";
 
 const EditProduct = () => {
   return (
@@ -1101,7 +1104,7 @@ export default EditProduct;
 Now let's import this page and set up a route for it in App.js:
 
 ```jsx
-<Route path='/edit/:id' component={EditProduct} />
+<Route path="/edit/:id" component={EditProduct} />
 ```
 
 If we click either of the rendered product listings now, we should be sent to a new page, and we should see the product ID in the URL.
@@ -1111,11 +1114,11 @@ Let's extract the ID from the url and make a get request for that specific item.
 In your EditProduct.js:
 
 ```jsx
-import { useParams } from 'react-router-dom';
-import useAxios from '../utils/useAxios';
-import { useState, useEffect } from 'react';
-import Item from '../components/Item';
-import { PRODUCTS_PATH } from '../utils/constants';
+import { useParams } from "react-router-dom";
+import useAxios from "../utils/useAxios";
+import { useState, useEffect } from "react";
+import Item from "../components/Item";
+import { PRODUCTS_PATH } from "../utils/constants";
 
 const EditProduct = () => {
   const [product, setProduct] = useState(null);
@@ -1161,9 +1164,9 @@ Please keep in mind this is just a bigger version of the login component we made
 Import useForm and yupResolver to start it off:
 
 ```jsx
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 ```
 
 Next we'll add some state varaibles to handle our form flow.
@@ -1180,23 +1183,23 @@ Remember that schema should be defined outside the page component definition.
 
 ```jsx
 const productSchema = yup.object().shape({
-  title: yup.string().required('Please provide a title'),
-  price: yup.number().required('Please provide a price'),
-  description: yup.string().required('Please provide a description'),
-  image_url: yup.string().required('Please provide an image url')
+  title: yup.string().required("Please provide a title"),
+  price: yup.number().required("Please provide a price"),
+  description: yup.string().required("Please provide a description"),
+  image_url: yup.string().required("Please provide an image url"),
 });
 ```
 
 ```jsx
 const { register, handleSubmit, errors } = useForm({
-  resolver: yupResolver(productSchema)
+  resolver: yupResolver(productSchema),
 });
 ```
 
 Now let's create the onSubmit function:
 
 ```jsx
-const onSubmit = async data => {
+const onSubmit = async (data) => {
   setSubmitting(true);
   setUpdateError(null);
 
@@ -1204,11 +1207,11 @@ const onSubmit = async data => {
 
   try {
     const response = await http.put(`${PRODUCTS_PATH}/${id}`, data);
-    console.log('response', response.data);
+    console.log("response", response.data);
     setProduct(response.data);
     setSuccess(true);
   } catch (error) {
-    console.log('error', error);
+    console.log("error", error);
     setUpdateError(error.toString());
   } finally {
     setSubmitting(false);
@@ -1226,8 +1229,8 @@ Next we need to add the form:
   <fieldset disabled={submitting}>
     <div>
       <input
-        name='title'
-        placeholder='Title'
+        name="title"
+        placeholder="Title"
         ref={register}
         defaultValue={product.title}
       />
@@ -1236,36 +1239,36 @@ Next we need to add the form:
 
     <div>
       <input
-        name='price'
-        placeholder='Price'
+        name="price"
+        placeholder="Price"
         defaultValue={product.price}
         ref={register}
-        type='number'
+        type="number"
       />
       {errors.price && <p>{errors.price.message}</p>}
     </div>
     <div>
       <textarea
-        name='description'
-        placeholder='Description'
+        name="description"
+        placeholder="Description"
         defaultValue={product.description}
         ref={register}
-        type='text'
+        type="text"
       />
       {errors.description && <p>{errors.description.message}</p>}
     </div>
     <div>
       <input
-        name='image_url'
-        placeholder='Image URL'
+        name="image_url"
+        placeholder="Image URL"
         ref={register}
         defaultValue={product.image_url}
-        type='text'
+        type="text"
       />
       {errors.image_url && <p>{errors.image_url.message}</p>}
     </div>
 
-    <button type='submit'>{submitting ? 'Updating ...' : 'Update'}</button>
+    <button type="submit">{submitting ? "Updating ..." : "Update"}</button>
   </fieldset>
 </form>;
 {
@@ -1280,3 +1283,77 @@ Congratulations, you have now learned to authenticate yourself using a JWT. You 
 Next Lesson will cover the Create (post) and Delete (delete) operations
 
 ## Lesson 3, adding and deleting
+
+The previous lessons we have done we have covered most of the new logic, but specifically for CRUD we have covered the R and U.
+
+Now to complete our CRUD app we need to add the C and the D.
+
+### Add Product / Item
+
+To start off create a new page and name it `AddProduct.js`.
+
+We need pretty much the same stuff as we did for EditProduct, only difference is instead of using the PUT method, we will use POST.
+
+This is because we don't want to update an existing ID so we have nothing to replace, rather we want to create something new.
+
+The rest can be exactly the same, except im changing the useState value for error, and exchanging the PUT method for POST (typed lowercase).
+
+```jsx
+const [postError, setPostError] = useState(null);
+```
+
+### TASK:
+
+- Make a route to your newly created page.
+
+- Protect it (any unauthenticated user should be sent to /login)
+
+- Add it as a link that is ONLY shown to users who are AUTHENTICATED.
+
+- Display the posted Item to the user AFTER the post is successful.
+
+- Once you have completed this task - add route protection to the EditProduct page as well.
+
+### Delete Item / Product
+
+To complete this step we will simply add some new functionality to our products page.
+
+Let's start by creating our delete logic:
+
+```jsx
+const deleteProduct = async (id, productTitle) => {
+  try {
+    const response = await http.delete(`${PRODUCTS_PATH}/${id}`);
+    console.log(response);
+    alert(`${productTitle} has been deleted.`);
+  } catch (error) {
+    console.log(error);
+  } finally {
+    setRender(render + 1);
+  }
+};
+```
+
+Those of you with a keen eye for details, will see three main differences to what we have done before.
+
+- We are using the delete() method, instead of get(), put() or post().
+
+- We are not writing the response or the response data anywhere, we are simply putting out an alert letting the user know the product has been deleted.
+
+- We are incrementing a new state variable in the finally{} codeblock.
+
+### TASK
+
+- Add the new state varable that corresponds with our code above (you can name it whatever you want, it does not have to be render.)
+
+- Modify the output from the map() method to have a new button that has an onclick that runs our new deleteProduct() function.
+
+Good Luck!
+
+## !Module Assignment!
+
+- Style your frontend, (however you'd like, but make it look nice).
+
+- Add two new products (instruments) to the API through your frontend (add your name to the title).
+
+- Fix any breaking bugs before delivering a link to your repo in moodle.
