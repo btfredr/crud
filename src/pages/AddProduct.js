@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import useAxios from "../utils/useAxios";
 import { useState, useEffect } from "react";
 import Item from "../components/Item";
@@ -9,7 +9,7 @@ import { productSchema } from "../utils/schemas";
 
 import "../App.css";
 
-const EditProduct = () => {
+const AddProduct = () => {
   const [product, setProduct] = useState(null);
   const { id } = useParams();
   const http = useAxios();
@@ -27,7 +27,7 @@ const EditProduct = () => {
     setPostError(null);
     console.log(data);
     try {
-      const response = await http.post(`${PRODUCTS_PATH}/${id}`, data);
+      const response = await http.post(`${PRODUCTS_PATH}`, data);
       console.log(response);
       setProduct(response.data);
       setSuccess(true);
@@ -35,6 +35,7 @@ const EditProduct = () => {
       console.log("error", error);
       setPostError(error.toString());
     } finally {
+      setSubmitting(false);
     }
   };
 
@@ -51,16 +52,11 @@ const EditProduct = () => {
     getProduct();
   }, [id]);
 
-  if (!product) {
-    return <p>Loading product...</p>;
-  }
-
   return (
     <div className="container">
-      <h2>Edit</h2>
-      <Item {...product} />
+      <h2>Add</h2>
       <form className="edit-form" onSubmit={handleSubmit(onSubmit)}>
-        {updateError && <p>{updateError}</p>}
+        {postError && <p>{postError}</p>}
         <fieldset disabled={submitting}>
           <div>
             <input
@@ -68,7 +64,6 @@ const EditProduct = () => {
               name="title"
               placeholder="Title"
               ref={register}
-              defaultValue={product.title}
             />
             {errors.title && <p>{errors.title.message}</p>}
           </div>
@@ -78,7 +73,6 @@ const EditProduct = () => {
               className="input"
               name="price"
               placeholder="Price"
-              defaultValue={product.price}
               ref={register}
               type="number"
             />
@@ -89,7 +83,6 @@ const EditProduct = () => {
               className="input"
               name="description"
               placeholder="Description"
-              defaultValue={product.description}
               ref={register}
               type="text"
             />
@@ -101,20 +94,17 @@ const EditProduct = () => {
               name="image_url"
               placeholder="Image URL"
               ref={register}
-              defaultValue={product.image_url}
               type="text"
             />
             {errors.image_url && <p>{errors.image_url.message}</p>}
           </div>
 
-          <button type="submit">
-            {submitting ? "Updating ..." : "Update"}
-          </button>
+          <button type="submit">{submitting ? "Adding ..." : "Add"}</button>
         </fieldset>
       </form>
-      {success ? <p>Listing of {product.title} was updated</p> : null}
+      {success ? <p>Listing of {product.title} was added</p> : null}
     </div>
   );
 };
 
-export default EditProduct;
+export default AddProduct;

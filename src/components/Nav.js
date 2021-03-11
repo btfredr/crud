@@ -21,6 +21,9 @@ const Nav = () => {
         <>
           <Link to="/products" className="nav-item">
             Products
+          </Link>
+          <Link to="/add" className="nav-item">
+            Add Products
           </Link>{" "}
           |{" "}
           <button onClick={logout} className="nav-btn">
