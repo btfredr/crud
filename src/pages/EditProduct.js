@@ -6,6 +6,8 @@ import { PRODUCTS_PATH } from "../utils/constants";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { productSchema } from "../utils/schemas";
+import DeleteButton from "../components/DeleteButton";
+import Spinner from "../assets/Spinner.gif";
 
 import "../App.css";
 
@@ -52,7 +54,11 @@ const EditProduct = () => {
   }, [id]);
 
   if (!product) {
-    return <p>Loading product...</p>;
+    return (
+      <div className="loading">
+        <img src={Spinner} alt="Loading" />;
+      </div>
+    );
   }
 
   return (
@@ -110,6 +116,7 @@ const EditProduct = () => {
           <button type="submit">
             {submitting ? "Updating ..." : "Update"}
           </button>
+          <DeleteButton id={product.id} />
         </fieldset>
       </form>
       {success ? <p>Listing of {product.title} was updated</p> : null}

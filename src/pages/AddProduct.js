@@ -13,6 +13,7 @@ const AddProduct = () => {
   const [product, setProduct] = useState(null);
   const { id } = useParams();
   const http = useAxios();
+  const history = useHistory();
 
   const [submitting, setSubmitting] = useState(false);
   const [postError, setPostError] = useState(null);
@@ -28,6 +29,7 @@ const AddProduct = () => {
     console.log(data);
     try {
       const response = await http.post(`${PRODUCTS_PATH}`, data);
+      history.push("/products");
       console.log(response);
       setProduct(response.data);
       setSuccess(true);

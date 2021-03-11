@@ -8,6 +8,7 @@ const Nav = () => {
   const history = useHistory();
 
   const logout = () => {
+    const confirmLogout = window.confirm("Are you sure you want to log out?");
     setAuth(null);
     history.push("/");
   };

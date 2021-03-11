@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import useAxios from "../utils/useAxios";
+import { PRODUCTS_PATH } from "../utils/constants";
 
 const DeleteButton = ({ id }) => {
   const [error, setError] = useState(null);
@@ -11,6 +12,9 @@ const DeleteButton = ({ id }) => {
   const url = `${PRODUCTS_PATH}/${id}`;
 
   async function handleDelete() {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this product?"
+    );
     try {
       await http.delete(url);
       history.push("/products");
@@ -20,7 +24,7 @@ const DeleteButton = ({ id }) => {
   }
 
   return (
-    <button type="button" className="delete" onClick="handleDelete">
+    <button type="button" className="delete" onClick={() => handleDelete(id)}>
       {error ? "Error" : "Delete"}
     </button>
   );

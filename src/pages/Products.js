@@ -5,6 +5,7 @@ import useAxios from "../utils/useAxios";
 import { PRODUCTS_PATH } from "../utils/constants";
 import Item from "../components/Item";
 import { Link } from "react-router-dom";
+import Spinner from "../assets/Spinner.gif";
 
 import "../App.css";
 
@@ -32,7 +33,11 @@ export const Products = () => {
   }
 
   if (!products) {
-    return <h3>Loading...</h3>;
+    return (
+      <div className="loading">
+        <img src={Spinner} alt="Loading" />;
+      </div>
+    );
   }
 
   return (
