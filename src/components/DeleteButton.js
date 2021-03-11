@@ -1,5 +1,4 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import useAxios from "../utils/useAxios";
 
@@ -10,6 +9,15 @@ const DeleteButton = ({ id }) => {
   const history = useHistory();
 
   const url = `${PRODUCTS_PATH}/${id}`;
+
+  async function handleDelete() {
+    try {
+      await http.delete(url);
+      history.push("/products");
+    } catch (error) {
+      setError(error);
+    }
+  }
 
   return (
     <button type="button" className="delete" onClick="handleDelete">
