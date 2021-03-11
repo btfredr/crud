@@ -15,12 +15,14 @@ a {
   background-color: #2b2d42;
   color: white;
   padding: 1rem;
+  width: 100%;
 }
 
 .nav-item {
   color: white;
   display: inline-block;
   padding: 0.5rem;
+  font-size: 1em;
 }
 
 .nav-btn {
@@ -61,4 +63,22 @@ a {
   top: 0;
   bottom: 0;
   position: fixed;
+}
+
+@media (max-width: 768px) {
+  .container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+  .product {
+    padding: 1rem;
+    max-width: 100%;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+  }
+  .nav {
+    display: flex;
+    flex-direction: column;
+  }
 }
