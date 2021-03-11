@@ -15,7 +15,7 @@ const EditProduct = () => {
   const http = useAxios();
 
   const [submitting, setSubmitting] = useState(false);
-  const [updateError, setUpdateError] = useState(null);
+  const [postError, setPostError] = useState(null);
   const [success, setSuccess] = useState(null);
 
   const { register, handleSubmit, errors } = useForm({
@@ -24,7 +24,7 @@ const EditProduct = () => {
 
   const onSubmit = async (data) => {
     setSubmitting(true);
-    setUpdateError(null);
+    setPostError(null);
     console.log(data);
     try {
       const response = await http.post(`${PRODUCTS_PATH}/${id}`, data);
@@ -33,7 +33,7 @@ const EditProduct = () => {
       setSuccess(true);
     } catch (error) {
       console.log("error", error);
-      setUpdateError(error.toString());
+      setPostError(error.toString());
     } finally {
     }
   };
