@@ -29,7 +29,6 @@ const AddProduct = () => {
     console.log(data);
     try {
       const response = await http.post(`${PRODUCTS_PATH}`, data);
-      history.push("/products");
       console.log(response);
       setProduct(response.data);
       setSuccess(true);
@@ -38,6 +37,7 @@ const AddProduct = () => {
       setPostError(error.toString());
     } finally {
       setSubmitting(false);
+      history.push("/products");
     }
   };
 
@@ -101,7 +101,9 @@ const AddProduct = () => {
             {errors.image_url && <p>{errors.image_url.message}</p>}
           </div>
 
-          <button type="submit">{submitting ? "Adding ..." : "Add"}</button>
+          <button type="submit" className="add">
+            {submitting ? "Adding ..." : "Add"}
+          </button>
         </fieldset>
       </form>
       {success ? <p>Listing of {product.title} was added</p> : null}

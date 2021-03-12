@@ -65,7 +65,7 @@ const EditProduct = () => {
     <div className="container">
       <h2>Edit</h2>
       <Item {...product} />
-      <form className="edit-form" onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         {updateError && <p>{updateError}</p>}
         <fieldset disabled={submitting}>
           <div>
@@ -113,10 +113,12 @@ const EditProduct = () => {
             {errors.image_url && <p>{errors.image_url.message}</p>}
           </div>
 
-          <button type="submit">
-            {submitting ? "Updating ..." : "Update"}
-          </button>
-          <DeleteButton id={product.id} />
+          <div className="buttons">
+            <button type="submit" className="update">
+              {submitting ? "Updating ..." : "Update"}
+            </button>
+            <DeleteButton id={product.id} />
+          </div>
         </fieldset>
       </form>
       {success ? <p>Listing of {product.title} was updated</p> : null}

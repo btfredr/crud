@@ -1,3 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  font-family: "Open Sans", sans-serif;
+}
+
 .container {
   display: flex;
   justify-content: center;
@@ -18,6 +28,11 @@ a {
   width: 100%;
 }
 
+.nav-links {
+  display: flex;
+  flex-direction: row;
+}
+
 .nav-item {
   color: white;
   display: inline-block;
@@ -25,12 +40,18 @@ a {
   font-size: 1em;
 }
 
-.nav-btn {
+.nav-item:hover {
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+}
+
+.logout {
+  color: black;
+  padding: 0.5rem;
+  font-size: 1em;
+  border-radius: 5px;
   border: none;
-  padding: 5px;
-  cursor: pointer;
-  margin-left: 1rem;
-  border-radius: 4px;
 }
 
 .product {
@@ -42,16 +63,11 @@ a {
   box-shadow: 10px 10px 25px 0px rgba(0, 0, 0, 0.21);
 }
 
-.edit-form {
-  border: none;
-  width: 100%;
-  max-width: 500px;
-  margin: 1rem;
-}
-
 .input {
-  width: 100%;
-  max-width: 100%;
+  padding: 0.5rem;
+  width: 96%;
+  margin: 0px 0px 10px;
+  border: 1px solid lightgrey;
 }
 
 .loading {
@@ -63,6 +79,49 @@ a {
   top: 0;
   bottom: 0;
   position: fixed;
+}
+
+form {
+  padding: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+  border: none;
+  width: 100%;
+}
+
+.update {
+  border: none;
+  background-color: green;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  padding: 0.3rem;
+  margin: 1rem;
+}
+
+.add {
+  border: none;
+  background-color: green;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  padding: 0.3rem;
+  margin: 1rem;
+}
+
+.delete {
+  border: none;
+  background-color: red;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  padding: 0.3rem;
+  margin: 1rem;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
 }
 
 @media (max-width: 768px) {
@@ -80,5 +139,19 @@ a {
   .nav {
     display: flex;
     flex-direction: column;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+  }
+
+  .buttons {
+    flex-direction: column;
+  }
+
+  .logout {
+    margin-top: 1rem;
   }
 }

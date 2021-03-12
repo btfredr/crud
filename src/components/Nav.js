@@ -1,9 +1,10 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 
 const Nav = () => {
   const [auth, setAuth] = useContext(AuthContext);
+  const [showLinks, setShowLinks] = useState(false);
 
   const history = useHistory();
 
@@ -17,27 +18,28 @@ const Nav = () => {
 
   return (
     <nav className="nav">
-      <Link to="/" className="nav-item">
-        Home
-      </Link>
-      {auth ? (
-        <>
-          <Link to="/products" className="nav-item">
-            Products
-          </Link>
-          <Link to="/add" className="nav-item">
-            Add Products
-          </Link>{" "}
-          |{" "}
-          <button onClick={logout} className="nav-btn">
-            Log out
-          </button>
-        </>
-      ) : (
-        <Link to="/login" className="nav-item">
-          Login
+      <div className="nav-links">
+        <Link to="/" className="nav-item">
+          Home
         </Link>
-      )}
+        {auth ? (
+          <>
+            <Link to="/products" className="nav-item">
+              Products
+            </Link>
+            <Link to="/add" className="nav-item">
+              Add Products
+            </Link>
+            <button onClick={logout} className="logout">
+              Log out
+            </button>
+          </>
+        ) : (
+          <Link to="/login" className="nav-item">
+            Login
+          </Link>
+        )}
+      </div>
     </nav>
   );
 };

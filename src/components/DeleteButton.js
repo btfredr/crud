@@ -20,11 +20,11 @@ const DeleteButton = ({ id }) => {
       try {
         await http.delete(url);
         alert("Product has been deleted succesfully.");
-        history.push("/products");
       } catch (error) {
         setError(error);
       } finally {
         setRender(render + 1);
+        history.push("/products");
       }
     }
   }
