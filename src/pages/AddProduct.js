@@ -1,11 +1,11 @@
 import { useParams, useHistory } from "react-router-dom";
 import useAxios from "../utils/useAxios";
 import { useState, useEffect } from "react";
-import Item from "../components/Item";
 import { PRODUCTS_PATH } from "../utils/constants";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { productSchema } from "../utils/schemas";
+import Heading from "../components/Heading";
 
 import "../App.css";
 
@@ -56,7 +56,7 @@ const AddProduct = () => {
 
   return (
     <div className="container">
-      <h2>Add</h2>
+      <Heading title="Add new product" />
       <form className="edit-form" onSubmit={handleSubmit(onSubmit)}>
         {postError && <p>{postError}</p>}
         <fieldset disabled={submitting}>

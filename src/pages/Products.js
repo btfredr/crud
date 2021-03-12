@@ -6,6 +6,7 @@ import { PRODUCTS_PATH } from "../utils/constants";
 import Item from "../components/Item";
 import { Link } from "react-router-dom";
 import Spinner from "../assets/Spinner.gif";
+import Heading from "../components/Heading";
 
 import "../App.css";
 
@@ -42,7 +43,7 @@ export const Products = () => {
 
   return (
     <div className="container">
-      <h1>Products</h1>
+      <Heading title="Products" />
 
       {products.map((product) => {
         return (

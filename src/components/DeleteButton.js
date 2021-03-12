@@ -5,6 +5,7 @@ import { PRODUCTS_PATH } from "../utils/constants";
 
 const DeleteButton = ({ id }) => {
   const [error, setError] = useState(null);
+  const [render, setRender] = useState(false);
 
   const http = useAxios();
   const history = useHistory();
@@ -15,11 +16,16 @@ const DeleteButton = ({ id }) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this product?"
     );
-    try {
-      await http.delete(url);
-      history.push("/products");
-    } catch (error) {
-      setError(error);
+    if (confirmDelete) {
+      try {
+        await http.delete(url);
+        alert("Product has been deleted succesfully.");
+        history.push("/products");
+      } catch (error) {
+        setError(error);
+      } finally {
+        setRender(render + 1);
+      }
     }
   }
 

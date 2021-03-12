@@ -9,8 +9,10 @@ const Nav = () => {
 
   const logout = () => {
     const confirmLogout = window.confirm("Are you sure you want to log out?");
-    setAuth(null);
-    history.push("/");
+    if (confirmLogout) {
+      setAuth(null);
+      history.push("/");
+    }
   };
 
   return (
