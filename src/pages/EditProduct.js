@@ -8,6 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { productSchema } from "../utils/schemas";
 import DeleteButton from "../components/DeleteButton";
 import Spinner from "../assets/Spinner.gif";
+import Heading from "../components/Heading";
 
 import "../App.css";
 
@@ -63,7 +64,7 @@ const EditProduct = () => {
 
   return (
     <div className="container">
-      <h2>Edit</h2>
+      <Heading title="Edit this product" />
       <Item {...product} />
       <form onSubmit={handleSubmit(onSubmit)}>
         {updateError && <p>{updateError}</p>}
